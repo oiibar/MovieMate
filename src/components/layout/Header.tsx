@@ -5,11 +5,19 @@ import logo from "@/assets/logo.png";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-const Header = () => {
+interface HeaderProps {
+  className?: string; // Optional className prop
+  style?: object;
+}
+
+const Header: React.FC<HeaderProps> = ({ className, style }) => {
   const pathname = usePathname();
 
   return (
-    <header className="bg-transparent">
+    <header
+      className={`bg-cover bg-center bg-no-repeat ${className}`}
+      style={style}
+    >
       <div className="container py-6 flex justify-between items-center">
         <Link href="/home">
           <div className="flex items-center cursor-pointer">
@@ -34,6 +42,15 @@ const Header = () => {
               }`}
             >
               Movies
+            </li>
+          </Link>
+          <Link href="/series">
+            <li
+              className={`cursor-pointer ${
+                pathname === "/series" ? "border-b-2 border-orange" : ""
+              }`}
+            >
+              TV Series
             </li>
           </Link>
         </ul>

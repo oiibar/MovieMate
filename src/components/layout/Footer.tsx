@@ -2,6 +2,7 @@ import React from "react";
 import Image from "next/image";
 import logo from "@/assets/logo.png";
 import bg from "@/assets/bg.jpg"; // Import the background image
+import Link from "next/link";
 
 const Footer: React.FC = () => {
   return (
@@ -10,10 +11,12 @@ const Footer: React.FC = () => {
       style={{ backgroundImage: `url(${bg.src})` }} // Apply the background image
     >
       <div className="container flex flex-col justify-center items-center gap-12 py-16">
-        <div className="flex items-center">
-          <Image src={logo} alt="MovieMate" width={50} height={50} />
-          <h1 className="font-bold text-2xl text-primary">MovieMate</h1>
-        </div>
+        <Link href="/home">
+          <div className="flex items-center cursor-pointer">
+            <Image src={logo} alt="MovieMate" width={50} height={50} />
+            <h1 className="text-2xl">MovieMate</h1>
+          </div>
+        </Link>
         <div className="flex gap-20">
           <div className="flex flex-col gap-4 text-primary">
             <a href="#" className="hover:text-orange">
