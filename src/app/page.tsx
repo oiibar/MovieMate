@@ -1,3 +1,3 @@
-export default function Home() {
-  return <main>Home</main>;
+export default function App() {
+  return <main>Root</main>;
 }
