@@ -1,0 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply font-montserrat font-medium text-[#FFFDFF] bg-[#0F0F0F];
+  }
+}
+
+@layer components {
+}
