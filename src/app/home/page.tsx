@@ -5,8 +5,8 @@ export default function Home() {
   return (
     <main>
       <HomeInfo />
-      <div className="bg-orange-700 container py-20 flex flex-col">
-        <section className="flex flex-col gap-36">
+      <div className="container py-20 flex flex-col">
+        <section className="flex flex-col gap-20">
           <MoviesList />
           <MoviesList />
           <MoviesList />

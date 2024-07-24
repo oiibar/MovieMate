@@ -13,8 +13,14 @@ const config: Config = {
     fontFamily: {
       montserrat: ["Montserrat", "sans-serif"],
     },
-    extend: {},
+    extend: {
+      colors: {
+        orange: "#FA1900",
+        primary: "#FFFDFF",
+      },
+    },
   },
   plugins: [],
 };
+
 export default config;

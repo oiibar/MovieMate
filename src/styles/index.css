@@ -4,7 +4,7 @@
 
 @layer base {
   body {
-    @apply font-montserrat font-bold text-[#FFFDFF] bg-[#0F0F0F];
+    @apply font-montserrat font-semibold text-primary bg-[#0F0F0F];
   }
 }
 
