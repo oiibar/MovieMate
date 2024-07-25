@@ -5,8 +5,6 @@ import Header from "@/components/layout/Header";
 import MoviesList from "@/components/movies/MoviesList";
 import bg from "@/assets/bg.jpg";
 import { useTopRatedMovies } from "@/hooks/useMovies";
-import { RootState, AppDispatch } from "@/store/store";
-import { useDispatch, useSelector } from "react-redux";
 
 const movies = [
   {
@@ -30,10 +28,6 @@ const movies = [
 ];
 
 const Home = () => {
-  const dispatch = useDispatch<AppDispatch>();
-  const topRatedMovies = useSelector(
-    (state: RootState) => state.movies.topRatedMovies
-  );
   const [currentIndex, setCurrentIndex] = useState(0);
   const { isLoading, data, error } = useTopRatedMovies();
 

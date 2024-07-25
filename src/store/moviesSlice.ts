@@ -1,10 +1,10 @@
 // src/store/moviesSlice.ts
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Movie } from "@/api/types";
+import { MoviesResponse } from "@/api/types";
 
 interface MoviesState {
-  topRatedMovies: Movie[];
-  trendingMovies: Movie[];
+  topRatedMovies: MoviesResponse["results"];
+  trendingMovies: MoviesResponse["results"];
 }
 
 const initialState: MoviesState = {
@@ -16,10 +16,10 @@ const moviesSlice = createSlice({
   name: "movies",
   initialState,
   reducers: {
-    setTopRatedMovies(state, action: PayloadAction<Movie[]>) {
+    setTopRatedMovies(state, action: PayloadAction<MoviesResponse["results"]>) {
       state.topRatedMovies = action.payload;
     },
-    setTrendingMovies(state, action: PayloadAction<Movie[]>) {
+    setTrendingMovies(state, action: PayloadAction<MoviesResponse["results"]>) {
       state.trendingMovies = action.payload;
     },
   },
