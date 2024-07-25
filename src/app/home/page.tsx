@@ -4,6 +4,7 @@ import HomeInfo from "@/components/HomeInfo";
 import Header from "@/components/layout/Header";
 import MoviesList from "@/components/movies/MoviesList";
 import bg from "@/assets/bg.jpg";
+import { useTopRatedMovies } from "@/hooks/useMovies";
 
 const movies = [
   {
@@ -26,8 +27,18 @@ const movies = [
   },
 ];
 
-const Layout = () => {
+const Home = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const { isLoading, data, error } = useTopRatedMovies(); // Use the custom hook
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
+
   const handlePrev = () => {
     setCurrentIndex((prevIndex) =>
       prevIndex > 0 ? prevIndex - 1 : movies.length - 1
@@ -71,13 +82,13 @@ const Layout = () => {
       <div className="container py-20 flex flex-col">
         <section className="flex flex-col gap-20">
           <MoviesList title="Trending movies" />
-          <MoviesList title="Top Rated" />
-          <MoviesList title="Upcoming Releases" />
-          <MoviesList title="Popular" />
+          <MoviesList title="Top Rated movies" />
+          <MoviesList title="Trending TV Shows" />
+          <MoviesList title="Top Rated TV Shows" />
         </section>
       </div>
     </main>
   );
 };
 
-export default Layout;
+export default Home;

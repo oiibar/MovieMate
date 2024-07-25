@@ -7,7 +7,7 @@ interface MoviesListProps {
   title: string;
 }
 
-const MoviesList: React.FC<MoviesListProps> = ({ title = "All movies" }) => {
+const MoviesList: React.FC<MoviesListProps> = ({ title }) => {
   return (
     <section className="flex flex-col gap-2">
       <div className="flex justify-between">
@@ -19,6 +19,7 @@ const MoviesList: React.FC<MoviesListProps> = ({ title = "All movies" }) => {
         </Link>
       </div>
       <div className="flex justify-between gap-4">
+        <MovieListItem />
         <MovieListItem />
         <MovieListItem />
         <MovieListItem />
