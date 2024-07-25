@@ -1,12 +1,13 @@
 "use client";
 import React, { useState } from "react";
-import HomeInfo from "@/components/HomeInfo";
+import HomeInfo from "./HomeInfo";
 import Header from "@/components/layout/Header";
 import MoviesList from "@/components/movies/MoviesList";
 import bg from "@/assets/bg.jpg";
 import { useTopRatedMovies } from "@/hooks/useMovies";
+import Footer from "@/components/layout/Footer";
 
-const movies = [
+const tests = [
   {
     name: "Venom",
     details: "Details",
@@ -41,12 +42,12 @@ const Home = () => {
 
   const handlePrev = () => {
     setCurrentIndex((prevIndex) =>
-      prevIndex > 0 ? prevIndex - 1 : movies.length - 1
+      prevIndex > 0 ? prevIndex - 1 : tests.length - 1
     );
   };
   const handleNext = () => {
     setCurrentIndex((prevIndex) =>
-      prevIndex < movies.length - 1 ? prevIndex + 1 : 0
+      prevIndex < tests.length - 1 ? prevIndex + 1 : 0
     );
   };
 
@@ -58,13 +59,13 @@ const Home = () => {
           className="relative flex transition-transform duration-500 ease-in-out"
           style={{ transform: `translateX(-${currentIndex * 100}%)` }}
         >
-          {movies.map((movie, index) => (
+          {tests.map((test, index) => (
             <div
               key={index}
               className="flex-shrink-0 w-full bg-cover bg-center bg-no-repeat py-8"
               style={{ backgroundImage: `url(${bg.src})` }}
             >
-              <HomeInfo movie={movie} />
+              <HomeInfo test={test} />
             </div>
           ))}
         </div>
@@ -75,7 +76,7 @@ const Home = () => {
         ></button>
         <button
           onClick={handleNext}
-          disabled={currentIndex === movies.length - 1}
+          disabled={currentIndex === tests.length - 1}
           className="absolute right-0 top-0 bottom-0 w-1/5 h-full bg-transparent"
         ></button>
       </div>
@@ -87,6 +88,7 @@ const Home = () => {
           <MoviesList title="Top Rated TV Shows" />
         </section>
       </div>
+      <Footer />
     </main>
   );
 };

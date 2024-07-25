@@ -7,6 +7,7 @@ import Input from "@/components/common/Input";
 import { useRouter } from "next/navigation";
 import bg from "@/assets/bg.jpg";
 import Header from "@/components/layout/Header";
+import Footer from "@/components/layout/Footer";
 
 export default function Series() {
   const [query, setQuery] = useState("");
@@ -62,6 +63,7 @@ export default function Series() {
           </div>
         </section>
       </div>
+      <Footer />
     </main>
   );
 }

@@ -1,3 +1,4 @@
+import Footer from "@/components/layout/Footer";
 import Header from "@/components/layout/Header";
 import MoviesList from "@/components/movies/MoviesList";
 import React from "react";
@@ -22,9 +23,10 @@ const MovieDetails = ({ params }: { params: { id: string } }) => {
             </div>
           </section>
           <section className="flex flex-col gap-20">
-            <MoviesList title={"All movies"} />
+            <MoviesList title={"Similar"} />
           </section>
         </div>
+        <Footer />
       </main>
     </>
   );

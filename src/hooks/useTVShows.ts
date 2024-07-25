@@ -7,9 +7,12 @@ import {
   searchTVShows,
   fetchSimilarTVShows,
 } from "@/api/tvShows";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@/store/store";
 
 // Hook to fetch top-rated TV shows
 export const useTopRatedTVShows = () => {
+  const dispatch = useDispatch<AppDispatch>();
   return useQuery<TVShowResponse, Error>({
     queryKey: ["topRatedTVShows"],
     queryFn: fetchTopRatedTVShows,

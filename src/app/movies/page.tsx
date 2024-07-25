@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import bg from "@/assets/bg.jpg";
 
 import Header from "@/components/layout/Header";
+import Footer from "@/components/layout/Footer";
 
 export default function Movies() {
   const [query, setQuery] = useState("");
@@ -61,6 +62,7 @@ export default function Movies() {
           </div>
         </section>
       </div>
+      <Footer />
     </main>
   );
 }

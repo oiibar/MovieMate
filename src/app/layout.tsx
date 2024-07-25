@@ -18,15 +18,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ReduxProvider>
-      <ReactQueryClientProvider>
+    <ReactQueryClientProvider>
+      <ReduxProvider>
         <html lang="en">
-          <body className={montserrat.className}>
-            <main>{children}</main>
-            <Footer />
-          </body>
+          <body className={montserrat.className}>{children}</body>
         </html>
-      </ReactQueryClientProvider>
-    </ReduxProvider>
+      </ReduxProvider>
+    </ReactQueryClientProvider>
   );
 }

@@ -28,7 +28,7 @@ const Header: React.FC<HeaderProps> = ({ className, style }) => {
         <ul className="flex gap-4 font-bold">
           <Link href="/home">
             <li
-              className={`cursor-pointer ${
+              className={`cursor-pointer hover:scale-110 transition-transform duration-150 ${
                 pathname === "/home" ? "border-b-2 border-orange" : ""
               }`}
             >
@@ -37,7 +37,7 @@ const Header: React.FC<HeaderProps> = ({ className, style }) => {
           </Link>
           <Link href="/movies">
             <li
-              className={`cursor-pointer ${
+              className={`cursor-pointer hover:scale-110 transition-transform duration-150 ${
                 pathname === "/movies" ? "border-b-2 border-orange" : ""
               }`}
             >
@@ -46,7 +46,7 @@ const Header: React.FC<HeaderProps> = ({ className, style }) => {
           </Link>
           <Link href="/series">
             <li
-              className={`cursor-pointer ${
+              className={`cursor-pointer hover:scale-110 transition-transform duration-150 ${
                 pathname === "/series" ? "border-b-2 border-orange" : ""
               }`}
             >
