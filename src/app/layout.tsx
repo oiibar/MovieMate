@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 import Footer from "@/components/layout/Footer";
 import "@/styles/index.css";
-import { ReactQueryClientProvider } from "./ReactQueryClientProvider";
+import { ReactQueryClientProvider } from "../config/ReactQueryClientProvider";
+import ReduxProvider from "@/config/ReduxProvider";
 
 const montserrat = Montserrat({ subsets: ["latin"] });
 
@@ -17,13 +18,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ReactQueryClientProvider>
-      <html lang="en">
-        <body className={montserrat.className}>
-          <main>{children}</main>
-          <Footer />
-        </body>
-      </html>
-    </ReactQueryClientProvider>
+    <ReduxProvider>
+      <ReactQueryClientProvider>
+        <html lang="en">
+          <body className={montserrat.className}>
+            <main>{children}</main>
+            <Footer />
+          </body>
+        </html>
+      </ReactQueryClientProvider>
+    </ReduxProvider>
   );
 }
