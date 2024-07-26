@@ -25,6 +25,16 @@ export interface Movie {
   vote_average: number;
 }
 
+export interface MovieVideo {
+  id: number;
+  results: {
+    id: string;
+    key: string;
+    name: string;
+    published_at: string;
+  }[];
+}
+
 export interface MoviesResponse {
   page: number;
   results: Movie[];

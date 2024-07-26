@@ -1,11 +1,12 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import HomeInfo from "./HomeInfo";
 import Header from "@/components/layout/Header";
 import MoviesList from "@/components/movies/MoviesList";
 import bg from "@/assets/bg.jpg";
 import { useTopRatedMovies } from "@/hooks/useMovies";
 import Footer from "@/components/layout/Footer";
+import { Movie } from "@/api/types";
 
 const tests = [
   {
@@ -45,6 +46,7 @@ const Home = () => {
       prevIndex > 0 ? prevIndex - 1 : tests.length - 1
     );
   };
+
   const handleNext = () => {
     setCurrentIndex((prevIndex) =>
       prevIndex < tests.length - 1 ? prevIndex + 1 : 0
@@ -82,10 +84,7 @@ const Home = () => {
       </div>
       <div className="container py-20 flex flex-col">
         <section className="flex flex-col gap-20">
-          <MoviesList title="Trending movies" />
-          <MoviesList title="Top Rated movies" />
-          <MoviesList title="Trending TV Shows" />
-          <MoviesList title="Top Rated TV Shows" />
+          <MoviesList listTitle="Top Rated Movies" movies={data?.results} />
         </section>
       </div>
       <Footer />

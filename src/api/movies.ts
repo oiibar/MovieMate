@@ -1,5 +1,5 @@
 import { tmdbClient } from "./tmdbClient";
-import { Movie, MoviesResponse } from "./types";
+import { Movie, MoviesResponse, MovieVideo } from "./types";
 
 export const fetchTopRatedMovies = async (): Promise<MoviesResponse> => {
   const response = await tmdbClient.get("movie/top_rated");
@@ -11,6 +11,10 @@ export const fetchTrendingMovies = async (): Promise<MoviesResponse> => {
 };
 export const fetchMovieDetails = async (id: number): Promise<Movie> => {
   const response = await tmdbClient.get(`movie/${id}`);
+  return response.data;
+};
+export const fetchMovieVideo = async (id: number): Promise<MovieVideo> => {
+  const response = await tmdbClient.get(`movie/${id}/videos`);
   return response.data;
 };
 export const searchMovies = async (query: string): Promise<MoviesResponse> => {

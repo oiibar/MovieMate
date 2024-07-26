@@ -1,13 +1,13 @@
-// src/hooks/useMovies.ts
 import { useQuery } from "@tanstack/react-query";
 import {
   fetchMovieDetails,
+  fetchMovieVideo,
   fetchSimilarMovies,
   fetchTopRatedMovies,
   fetchTrendingMovies,
   searchMovies,
 } from "@/api/movies";
-import { Movie, MoviesResponse } from "@/api/types";
+import { Movie, MoviesResponse, MovieVideo } from "@/api/types";
 
 export const useTopRatedMovies = () => {
   return useQuery<MoviesResponse, Error>({
@@ -23,15 +23,20 @@ export const useTrendingMovies = () => {
   });
 };
 
-// Hook to fetch details of a specific TV show by ID
 export const useMovieDetails = (id: number) => {
   return useQuery<Movie, Error>({
-    queryKey: ["TVShowDetails", id],
+    queryKey: ["movieDetails", id],
     queryFn: () => fetchMovieDetails(id),
   });
 };
 
-// Hook to search TV shows by query
+export const useMovieVideo = (id: number) => {
+  return useQuery<MovieVideo, Error>({
+    queryKey: ["movieVideo", id],
+    queryFn: () => fetchMovieVideo(id),
+  });
+};
+
 export const useSearchMovies = (query: string) => {
   return useQuery<MoviesResponse, Error>({
     queryKey: ["searchMovies", query],
@@ -39,7 +44,6 @@ export const useSearchMovies = (query: string) => {
   });
 };
 
-// Hook to fetch similar TV shows by series ID
 export const useSimilarMovies = (movie_id: number) => {
   return useQuery<MoviesResponse, Error>({
     queryKey: ["similarMovies", movie_id],
