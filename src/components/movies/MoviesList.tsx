@@ -1,4 +1,3 @@
-import React from "react";
 import MovieListItem from "./MovieListItem";
 import Button from "../common/Button";
 import Link from "next/link";

@@ -1,4 +1,3 @@
-import React from "react";
 import Image from "next/image";
 import logo from "@/assets/logo.png";
 import bg from "@/assets/bg.jpg"; // Import the background image

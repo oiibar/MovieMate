@@ -1,33 +1,36 @@
 "use client";
-import React, { useState } from "react";
+
+import React, { Suspense, useState } from "react";
 import HomeInfo from "./HomeInfo";
 import Header from "@/components/layout/Header";
-import MoviesList from "@/components/movies/MoviesList";
-import { useTopRatedMovies, useTrendingMovies } from "@/hooks/useMovies";
 import Footer from "@/components/layout/Footer";
+import { useTopRatedMovies, useTrendingMovies } from "@/hooks/useMovies";
 import { useTopRatedTVShows, useTrendingTVShows } from "@/hooks/useTVShows";
 
-const Home = () => {
+const MoviesList = React.lazy(() => import("@/components/movies/MoviesList"));
+
+const Home: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+
   const {
-    isLoading: isLoadingMovies,
-    data: moviesData = [], // Default to empty array
+    data: moviesData = [],
     error: moviesError,
+    isLoading: isLoadingMovies,
   } = useTopRatedMovies();
   const {
-    isLoading: isLoadingTrendingMovies,
-    data: trendingMoviesData = [], // Default to empty array
+    data: trendingMoviesData = [],
     error: trendingMoviesError,
+    isLoading: isLoadingTrendingMovies,
   } = useTrendingMovies();
   const {
-    isLoading: isLoadingTopRatedTV,
-    data: topRatedTVData = [], // Default to empty array
+    data: topRatedTVData = [],
     error: topRatedTVError,
+    isLoading: isLoadingTopRatedTV,
   } = useTopRatedTVShows();
   const {
-    isLoading: isLoadingTrendingTV,
-    data: trendingTVData = [], // Default to empty array
+    data: trendingTVData = [],
     error: trendingTVError,
+    isLoading: isLoadingTrendingTV,
   } = useTrendingTVShows();
 
   if (
@@ -36,7 +39,7 @@ const Home = () => {
     isLoadingTopRatedTV ||
     isLoadingTrendingTV
   ) {
-    return <div>Loading...</div>;
+    return <div className="text-center text-2xl">Loading...</div>;
   }
 
   if (
@@ -45,15 +48,12 @@ const Home = () => {
     topRatedTVError ||
     trendingTVError
   ) {
-    return (
-      <div>
-        Error:{" "}
-        {moviesError?.message ||
-          trendingMoviesError?.message ||
-          topRatedTVError?.message ||
-          trendingTVError?.message}
-      </div>
-    );
+    const errorMessage =
+      moviesError?.message ||
+      trendingMoviesError?.message ||
+      topRatedTVError?.message ||
+      trendingTVError?.message;
+    return <div>Error: {errorMessage}</div>;
   }
 
   const handlePrev = () => {
@@ -76,9 +76,9 @@ const Home = () => {
           className="relative flex transition-transform duration-500 ease-in-out"
           style={{ transform: `translateX(-${currentIndex * 100}%)` }}
         >
-          {trendingMoviesData.map((item, index) => (
+          {trendingMoviesData.map((item) => (
             <div
-              key={index}
+              key={item.id}
               className="relative flex-shrink-0 w-full bg-cover bg-center bg-no-repeat"
               style={{
                 backgroundImage: `url(https://image.tmdb.org/t/p/original/${item.backdrop_path})`,
@@ -108,10 +108,19 @@ const Home = () => {
       </div>
       <div className="container py-20 flex flex-col">
         <section className="flex flex-col gap-20">
-          <MoviesList listTitle="Top Rated Movies" media={moviesData} />
-          <MoviesList listTitle="Trending Movies" media={trendingMoviesData} />
-          <MoviesList listTitle="Top Rated TV Shows" media={topRatedTVData} />
-          <MoviesList listTitle="Trending TV Shows" media={trendingTVData} />
+          <Suspense
+            fallback={
+              <div className="text-center text-2xl">Loading movies...</div>
+            }
+          >
+            <MoviesList listTitle="Top Rated Movies" media={moviesData} />
+            <MoviesList
+              listTitle="Trending Movies"
+              media={trendingMoviesData}
+            />
+            <MoviesList listTitle="Top Rated TV Shows" media={topRatedTVData} />
+            <MoviesList listTitle="Trending TV Shows" media={trendingTVData} />
+          </Suspense>
         </section>
       </div>
       <Footer />

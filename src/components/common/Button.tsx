@@ -1,9 +1,5 @@
-import React from "react";
-
-// Define the possible button variants
 type ButtonVariant = "glowing" | "default";
 
-// Define the styles for each variant
 const buttonVariants: Record<ButtonVariant, string> = {
   glowing:
     "border-2 border-orange bg-orange rounded-full px-6 py-1 text-primary",

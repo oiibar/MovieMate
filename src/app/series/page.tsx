@@ -49,7 +49,7 @@ export default function Series() {
             {data &&
               data.map((tv: TVShow) => (
                 <MovieListItem
-                  key={tv.id}
+                  id={tv.id}
                   title={tv.name}
                   posterPath={tv.poster_path}
                 />
