@@ -8,6 +8,8 @@ import { useRouter } from "next/navigation";
 import bg from "@/assets/bg.jpg";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import { useTopRatedTVShows } from "@/hooks/useTVShows";
+import { TVShow } from "@/api/types";
 
 export default function Series() {
   const [query, setQuery] = useState("");
@@ -19,6 +21,15 @@ export default function Series() {
       router.push(`/movies/${encodeURIComponent(query.trim())}`);
     }
   };
+  const { isLoading, data, error } = useTopRatedTVShows();
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
 
   return (
     <main>
@@ -35,31 +46,14 @@ export default function Series() {
             <Button text="Search" variant="glowing" />
           </form>
           <div className="flex justify-between flex-wrap gap-4">
-            <MovieListItem />
-            <MovieListItem />
-            <MovieListItem />
-            <MovieListItem />
-            <MovieListItem />
-            <MovieListItem />
-            <MovieListItem />
-            <MovieListItem />
-            <MovieListItem />
-            <MovieListItem />
-            <MovieListItem />
-            <MovieListItem />
-            <MovieListItem />
-            <MovieListItem />
-            <MovieListItem />
-            <MovieListItem />
-            <MovieListItem />
-            <MovieListItem />
-            <MovieListItem />
-            <MovieListItem />
-            <MovieListItem />
-            <MovieListItem />
-            <MovieListItem />
-            <MovieListItem />
-            <MovieListItem />
+            {data &&
+              data.map((tv: TVShow) => (
+                <MovieListItem
+                  key={tv.id}
+                  title={tv.name}
+                  posterPath={tv.poster_path}
+                />
+              ))}
           </div>
         </section>
       </div>

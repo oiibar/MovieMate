@@ -2,38 +2,36 @@ import React from "react";
 import MovieListItem from "./MovieListItem";
 import Button from "../common/Button";
 import Link from "next/link";
+import { Movie, TVShow } from "@/api/types";
 
-interface Movie {
-  id: number;
-  title: string;
-  poster_path: string;
+// Type guard to check if item is a Movie
+function isMovie(item: Movie | TVShow): item is Movie {
+  return (item as Movie).title !== undefined;
 }
 
 interface MoviesListProps {
   listTitle: string;
-  movies?: Movie[];
+  media?: (Movie | TVShow)[];
 }
 
-const MoviesList: React.FC<MoviesListProps> = ({ listTitle, movies = [] }) => {
+const MoviesList: React.FC<MoviesListProps> = ({ listTitle, media = [] }) => {
   return (
-    <section className="flex flex-col gap-2">
-      <div className="flex justify-between">
+    <section className="flex flex-col gap-4">
+      <div className="flex justify-between items-center mb-4">
         <h3 className="font-bold text-lg">{listTitle}</h3>
         <Link href="/movies">
-          <div className="flex items-center cursor-pointer">
-            <Button text="View more" variant="default" />
-          </div>
+          <Button text="View more" variant="default" />
         </Link>
       </div>
-      <div className="flex justify-between gap-1 overflow-x-scroll scrollbar-hidden">
-        {movies.length === 0 ? (
-          <div>No movies available</div>
+      <div className="flex gap-4 overflow-x-auto scrollbar-hidden">
+        {media.length === 0 ? (
+          <div className="text-white">No items available</div>
         ) : (
-          movies.map((movie) => (
+          media.map((item) => (
             <MovieListItem
-              key={movie.id}
-              title={movie.title}
-              posterPath={movie.poster_path}
+              id={item.id}
+              title={isMovie(item) ? item.title : item.name}
+              posterPath={item.poster_path}
             />
           ))
         )}

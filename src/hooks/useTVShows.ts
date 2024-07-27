@@ -9,14 +9,14 @@ import {
 } from "@/api/tvShows";
 
 export const useTopRatedTVShows = () => {
-  return useQuery<TVShowResponse, Error>({
+  return useQuery<TVShow[], Error>({
     queryKey: ["topRatedTVShows"],
     queryFn: fetchTopRatedTVShows,
   });
 };
 
 export const useTrendingTVShows = () => {
-  return useQuery<TVShowResponse, Error>({
+  return useQuery<TVShow[], Error>({
     queryKey: ["trendingTVShows"],
     queryFn: fetchTrendingTVShows,
   });

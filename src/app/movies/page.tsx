@@ -1,4 +1,4 @@
-"use client"; // This line marks the component as a Client Component
+"use client";
 
 import React, { useState } from "react";
 import Button from "@/components/common/Button";
@@ -6,9 +6,10 @@ import MovieListItem from "@/components/movies/MovieListItem";
 import Input from "@/components/common/Input";
 import { useRouter } from "next/navigation";
 import bg from "@/assets/bg.jpg";
-
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import { useTopRatedMovies } from "@/hooks/useMovies";
+import { Movie } from "@/api/types";
 
 export default function Movies() {
   const [query, setQuery] = useState("");
@@ -19,6 +20,17 @@ export default function Movies() {
       router.push(`/movies/${encodeURIComponent(query.trim())}`);
     }
   };
+
+  const { isLoading, data, error } = useTopRatedMovies();
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
+
   return (
     <main>
       <Header style={{ backgroundImage: `url(${bg.src})` }} />
@@ -33,33 +45,18 @@ export default function Movies() {
             />
             <Button text="Search" variant="glowing" />
           </form>
-          <div className="flex justify-between flex-wrap gap-4">
-            <MovieListItem />
-            <MovieListItem />
-            <MovieListItem />
-            <MovieListItem />
-            <MovieListItem />
-            <MovieListItem />
-            <MovieListItem />
-            <MovieListItem />
-            <MovieListItem />
-            <MovieListItem />
-            <MovieListItem />
-            <MovieListItem />
-            <MovieListItem />
-            <MovieListItem />
-            <MovieListItem />
-            <MovieListItem />
-            <MovieListItem />
-            <MovieListItem />
-            <MovieListItem />
-            <MovieListItem />
-            <MovieListItem />
-            <MovieListItem />
-            <MovieListItem />
-            <MovieListItem />
-            <MovieListItem />
+          <div className="flex justify-between flex-wrap gap-2">
+            {data &&
+              data.map((movie: Movie) => (
+                <MovieListItem
+                  key={movie.id}
+                  id={movie.id}
+                  title={movie.title}
+                  posterPath={movie.poster_path}
+                />
+              ))}
           </div>
+          <Button text="View more" variant="default" />
         </section>
       </div>
       <Footer />

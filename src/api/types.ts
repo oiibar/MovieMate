@@ -23,6 +23,7 @@ export interface Movie {
   release_date: string;
   title: string;
   vote_average: number;
+  backdrop_path: string;
 }
 
 export interface MovieVideo {
@@ -44,9 +45,9 @@ export interface MoviesResponse {
 
 export interface TVShow {
   id: number;
-  name?: string;
+  name: string;
   overview: string;
-  first_air_date?: string;
+  first_air_date: string;
   poster_path: string;
   vote_average: number;
   genre_ids: number[];

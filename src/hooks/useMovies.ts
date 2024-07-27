@@ -10,14 +10,14 @@ import {
 import { Movie, MoviesResponse, MovieVideo } from "@/api/types";
 
 export const useTopRatedMovies = () => {
-  return useQuery<MoviesResponse, Error>({
+  return useQuery<Movie[], Error>({
     queryKey: ["topRatedMovies"],
     queryFn: fetchTopRatedMovies,
   });
 };
 
 export const useTrendingMovies = () => {
-  return useQuery<MoviesResponse, Error>({
+  return useQuery<Movie[], Error>({
     queryKey: ["trendingMovies"],
     queryFn: fetchTrendingMovies,
   });

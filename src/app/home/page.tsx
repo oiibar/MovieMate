@@ -1,55 +1,70 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import HomeInfo from "./HomeInfo";
 import Header from "@/components/layout/Header";
 import MoviesList from "@/components/movies/MoviesList";
-import bg from "@/assets/bg.jpg";
-import { useTopRatedMovies } from "@/hooks/useMovies";
+import { useTopRatedMovies, useTrendingMovies } from "@/hooks/useMovies";
 import Footer from "@/components/layout/Footer";
-import { Movie } from "@/api/types";
-
-const tests = [
-  {
-    name: "Venom",
-    details: "Details",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum consectetur illo laudantium ratione harum quisquam voluptatuminventore, corporis debitis esse. Nulla blanditiis alias dignissimos sequi eligendi deserunt nostrum cupiditate minima!",
-  },
-  {
-    name: "Shrek",
-    details: "Details",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum consectetur illo laudantium ratione harum quisquam voluptatuminventore, corporis debitis esse. Nulla blanditiis alias dignissimos sequi eligendi deserunt nostrum cupiditate minima!",
-  },
-  {
-    name: "Cars",
-    details: "Details",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum consectetur illo laudantium ratione harum quisquam voluptatuminventore, corporis debitis esse. Nulla blanditiis alias dignissimos sequi eligendi deserunt nostrum cupiditate minima!",
-  },
-];
+import { useTopRatedTVShows, useTrendingTVShows } from "@/hooks/useTVShows";
 
 const Home = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const { isLoading, data, error } = useTopRatedMovies();
+  const {
+    isLoading: isLoadingMovies,
+    data: moviesData = [], // Default to empty array
+    error: moviesError,
+  } = useTopRatedMovies();
+  const {
+    isLoading: isLoadingTrendingMovies,
+    data: trendingMoviesData = [], // Default to empty array
+    error: trendingMoviesError,
+  } = useTrendingMovies();
+  const {
+    isLoading: isLoadingTopRatedTV,
+    data: topRatedTVData = [], // Default to empty array
+    error: topRatedTVError,
+  } = useTopRatedTVShows();
+  const {
+    isLoading: isLoadingTrendingTV,
+    data: trendingTVData = [], // Default to empty array
+    error: trendingTVError,
+  } = useTrendingTVShows();
 
-  if (isLoading) {
+  if (
+    isLoadingMovies ||
+    isLoadingTrendingMovies ||
+    isLoadingTopRatedTV ||
+    isLoadingTrendingTV
+  ) {
     return <div>Loading...</div>;
   }
 
-  if (error) {
-    return <div>Error: {error.message}</div>;
+  if (
+    moviesError ||
+    trendingMoviesError ||
+    topRatedTVError ||
+    trendingTVError
+  ) {
+    return (
+      <div>
+        Error:{" "}
+        {moviesError?.message ||
+          trendingMoviesError?.message ||
+          topRatedTVError?.message ||
+          trendingTVError?.message}
+      </div>
+    );
   }
 
   const handlePrev = () => {
     setCurrentIndex((prevIndex) =>
-      prevIndex > 0 ? prevIndex - 1 : tests.length - 1
+      prevIndex > 0 ? prevIndex - 1 : trendingMoviesData.length - 1
     );
   };
 
   const handleNext = () => {
     setCurrentIndex((prevIndex) =>
-      prevIndex < tests.length - 1 ? prevIndex + 1 : 0
+      prevIndex < trendingMoviesData.length - 1 ? prevIndex + 1 : 0
     );
   };
 
@@ -61,30 +76,42 @@ const Home = () => {
           className="relative flex transition-transform duration-500 ease-in-out"
           style={{ transform: `translateX(-${currentIndex * 100}%)` }}
         >
-          {tests.map((test, index) => (
+          {trendingMoviesData.map((item, index) => (
             <div
               key={index}
-              className="flex-shrink-0 w-full bg-cover bg-center bg-no-repeat py-8"
-              style={{ backgroundImage: `url(${bg.src})` }}
+              className="relative flex-shrink-0 w-full bg-cover bg-center bg-no-repeat"
+              style={{
+                backgroundImage: `url(https://image.tmdb.org/t/p/original/${item.backdrop_path})`,
+              }}
             >
-              <HomeInfo test={test} />
+              <div className="absolute inset-0 bg-black opacity-80"></div>
+              <div className="relative z-10">
+                <HomeInfo item={item} />
+              </div>
             </div>
           ))}
         </div>
         <button
           onClick={handlePrev}
           disabled={currentIndex === 0}
-          className="absolute left-0 top-0 bottom-0 w-1/5 h-full bg-transparent"
-        ></button>
+          className="absolute cursor-pointer left-0 top-0 bottom-0 w-1/5 h-full bg-transparent flex items-center justify-center"
+        >
+          <span className="text-white text-2xl"></span>
+        </button>
         <button
           onClick={handleNext}
-          disabled={currentIndex === tests.length - 1}
-          className="absolute right-0 top-0 bottom-0 w-1/5 h-full bg-transparent"
-        ></button>
+          disabled={currentIndex === trendingMoviesData.length - 1}
+          className="absolute right-0 top-0 bottom-0 w-1/5 h-full bg-transparent flex items-center justify-center"
+        >
+          <span className="text-white text-2xl"></span>
+        </button>
       </div>
       <div className="container py-20 flex flex-col">
         <section className="flex flex-col gap-20">
-          <MoviesList listTitle="Top Rated Movies" movies={data?.results} />
+          <MoviesList listTitle="Top Rated Movies" media={moviesData} />
+          <MoviesList listTitle="Trending Movies" media={trendingMoviesData} />
+          <MoviesList listTitle="Top Rated TV Shows" media={topRatedTVData} />
+          <MoviesList listTitle="Trending TV Shows" media={trendingTVData} />
         </section>
       </div>
       <Footer />

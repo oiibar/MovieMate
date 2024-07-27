@@ -1,11 +1,11 @@
 import { tmdbClient } from "./tmdbClient";
 import { TVShow, TVShowResponse } from "./types";
 
-export const fetchTopRatedTVShows = async (): Promise<TVShowResponse> => {
+export const fetchTopRatedTVShows = async (): Promise<TVShow[]> => {
   const response = await tmdbClient.get("/tv/top_rated");
   return response.data.results;
 };
-export const fetchTrendingTVShows = async (): Promise<TVShowResponse> => {
+export const fetchTrendingTVShows = async (): Promise<TVShow[]> => {
   const response = await tmdbClient.get("trending/tv/day");
   return response.data.results;
 };
