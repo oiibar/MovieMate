@@ -50,6 +50,7 @@ export default function Movies() {
                   id={movie.id}
                   title={movie.title}
                   posterPath={movie.poster_path}
+                  type="movies" // Pass "movie" type
                 />
               ))}
           </div>

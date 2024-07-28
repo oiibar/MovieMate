@@ -2,24 +2,27 @@
 
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import { useMovieDetails } from "@/hooks/useMovies";
-import { format } from "date-fns";
 import { FaStar } from "react-icons/fa";
+import { useTVShowDetails } from "@/hooks/useTVShows";
+import { format } from "date-fns";
 
-const MovieDetails: React.FC<{ params: { id: string } }> = ({ params }) => {
+const TVShowDetails: React.FC<{ params: { id: string } }> = ({ params }) => {
   const { id } = params;
-  const { data: movie, isLoading, error } = useMovieDetails(Number(id));
+  const { data: tv, isLoading, error } = useTVShowDetails(Number(id));
 
   if (isLoading) return <div className="text-center text-2xl">Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
 
-  if (!movie) return <div>No movie found</div>;
-  const imageUrl = `https://image.tmdb.org/t/p/original/${movie.backdrop_path}`; // Use original backdrop path
-  const posterUrl = `https://image.tmdb.org/t/p/w200/${movie.poster_path}`;
+  if (!tv) return <div>No TVShow found</div>;
 
-  const formattedDate = movie.release_date
-    ? format(new Date(movie.release_date), "MMM d, yyyy")
+  // Format the date
+  const formattedDate = tv.first_air_date
+    ? format(new Date(tv.first_air_date), "MMM d, yyyy")
     : "Unknown date";
+
+  // Generate image URLs
+  const imageUrl = `https://image.tmdb.org/t/p/original/${tv.backdrop_path}`;
+  const posterUrl = `https://image.tmdb.org/t/p/w200/${tv.poster_path}`;
 
   return (
     <main>
@@ -35,14 +38,14 @@ const MovieDetails: React.FC<{ params: { id: string } }> = ({ params }) => {
             <img
               src={posterUrl}
               className="rounded-2xl h-96 w-full object-cover"
-              alt={movie.title}
+              alt={tv.name}
             />
             <div className="flex flex-col gap-6 max-w-lg">
-              <h2 className="text-6xl font-bold">{movie.title}</h2>
-              <div className="text-sm flex gap-2 items-center">
+              <h2 className="text-6xl font-bold">{tv.name}</h2>
+              <div className="text-sm flex gap-2">
                 <p>{formattedDate}</p>
                 <div className="flex gap-1">
-                  {movie.genres.map((genre) => (
+                  {tv.genres.map((genre) => (
                     <span
                       key={genre.id}
                       className="bg-gray-800 text-white px-2 py-1 rounded-full text-sm"
@@ -53,11 +56,11 @@ const MovieDetails: React.FC<{ params: { id: string } }> = ({ params }) => {
                 </div>
                 <p className="flex items-center gap-1">
                   <FaStar className="text-amber-300" />
-                  {Math.round(movie.vote_average * 10) / 10}/10
+                  {Math.round(tv.vote_average * 10) / 10}/10
                 </p>
               </div>
               <p className="text-sm">
-                {movie.overview || "No overview available"}
+                {tv.overview || "No overview available"}
               </p>
             </div>
           </section>
@@ -69,4 +72,4 @@ const MovieDetails: React.FC<{ params: { id: string } }> = ({ params }) => {
   );
 };
 
-export default MovieDetails;
+export default TVShowDetails;

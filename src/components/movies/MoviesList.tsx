@@ -1,7 +1,8 @@
+import React from "react";
+import { Movie, TVShow } from "@/api/types";
 import MovieListItem from "./MovieListItem";
 import Button from "../common/Button";
 import Link from "next/link";
-import { Movie, TVShow } from "@/api/types";
 
 // Type guard to check if item is a Movie
 function isMovie(item: Movie | TVShow): item is Movie {
@@ -11,14 +12,19 @@ function isMovie(item: Movie | TVShow): item is Movie {
 interface MoviesListProps {
   listTitle: string;
   media?: (Movie | TVShow)[];
+  type: "movies" | "tvshows"; // Added type prop
 }
 
-const MoviesList: React.FC<MoviesListProps> = ({ listTitle, media = [] }) => {
+const MoviesList: React.FC<MoviesListProps> = ({
+  listTitle,
+  media = [],
+  type,
+}) => {
   return (
     <section className="flex flex-col gap-4">
       <div className="flex justify-between items-center mb-4">
         <h3 className="font-bold text-lg">{listTitle}</h3>
-        <Link href="/movies">
+        <Link href={`/${type}`}>
           <Button text="View more" variant="default" />
         </Link>
       </div>
@@ -28,9 +34,11 @@ const MoviesList: React.FC<MoviesListProps> = ({ listTitle, media = [] }) => {
         ) : (
           media.map((item) => (
             <MovieListItem
+              key={item.id}
               id={item.id}
               title={isMovie(item) ? item.title : item.name}
               posterPath={item.poster_path}
+              type={type} // Pass type prop
             />
           ))
         )}

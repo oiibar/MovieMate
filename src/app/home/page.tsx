@@ -96,30 +96,41 @@ const Home: React.FC = () => {
           disabled={currentIndex === 0}
           className="absolute cursor-pointer left-0 top-0 bottom-0 w-1/5 h-full bg-transparent flex items-center justify-center"
         >
-          <span className="text-white text-2xl"></span>
+          <span className="text-white text-2xl"></span> {/* Updated arrow */}
         </button>
         <button
           onClick={handleNext}
           disabled={currentIndex === trendingMoviesData.length - 1}
           className="absolute right-0 top-0 bottom-0 w-1/5 h-full bg-transparent flex items-center justify-center"
         >
-          <span className="text-white text-2xl"></span>
+          <span className="text-white text-2xl"></span> {/* Updated arrow */}
         </button>
       </div>
       <div className="container py-20 flex flex-col">
         <section className="flex flex-col gap-20">
           <Suspense
-            fallback={
-              <div className="text-center text-2xl">Loading movies...</div>
-            }
+            fallback={<div className="text-center text-2xl">Loading...</div>}
           >
-            <MoviesList listTitle="Top Rated Movies" media={moviesData} />
+            <MoviesList
+              listTitle="Top Rated Movies"
+              media={moviesData}
+              type="movies"
+            />
             <MoviesList
               listTitle="Trending Movies"
               media={trendingMoviesData}
+              type="movies"
             />
-            <MoviesList listTitle="Top Rated TV Shows" media={topRatedTVData} />
-            <MoviesList listTitle="Trending TV Shows" media={trendingTVData} />
+            <MoviesList
+              listTitle="Top Rated TV Shows"
+              media={topRatedTVData}
+              type="tvshows" // Pass "tvshow" type
+            />
+            <MoviesList
+              listTitle="Trending TV Shows"
+              media={trendingTVData}
+              type="tvshows"
+            />
           </Suspense>
         </section>
       </div>

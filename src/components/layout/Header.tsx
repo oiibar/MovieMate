@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 import logo from "@/assets/logo.png";
 import Link from "next/link";
@@ -42,13 +43,13 @@ const Header: React.FC<HeaderProps> = ({ className, style }) => {
               Movies
             </li>
           </Link>
-          <Link href="/series">
+          <Link href="/tvshows">
             <li
               className={`cursor-pointer hover:scale-110 transition-transform duration-150 ${
-                pathname === "/series" ? "border-b-2 border-orange" : ""
+                pathname === "/tvshows" ? "border-b-2 border-orange" : ""
               }`}
             >
-              TV Series
+              TV Shows
             </li>
           </Link>
         </ul>

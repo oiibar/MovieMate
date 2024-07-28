@@ -1,18 +1,32 @@
+import React from "react";
+import { useRouter } from "next/navigation";
+
 interface MovieListItemProps {
   id: number;
   title: string;
   posterPath: string;
+  type: "movies" | "tvshows"; // Added type prop
 }
 
 const MovieListItem: React.FC<MovieListItemProps> = ({
   id,
   title,
   posterPath,
+  type, // Destructure type prop
 }) => {
+  const router = useRouter();
   const imageUrl = `https://image.tmdb.org/t/p/w200/${posterPath}`;
 
+  const handleClick = () => {
+    // Construct the URL based on the type prop
+    router.push(`/${type}/${id}`);
+  };
+
   return (
-    <div className="flex flex-col items-center gap-2 group rounded-lg w-64 flex-shrink-0 cursor-pointer">
+    <div
+      className="flex flex-col items-center gap-2 group rounded-lg w-64 flex-shrink-0 cursor-pointer"
+      onClick={handleClick}
+    >
       <img
         className="w-full h-96 object-cover rounded-xl transition-transform duration-150 ease-in-out transform group-hover:scale-105"
         alt={title}

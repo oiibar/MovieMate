@@ -1,15 +1,5 @@
 // types.ts
 
-export interface Movie {
-  id: number;
-  title: string;
-  overview: string;
-  release_date: string;
-  poster_path: string;
-  vote_average: number;
-  genre_ids: number[];
-}
-
 export interface Genres {
   id: number;
   name: string;
@@ -36,6 +26,16 @@ export interface MovieVideo {
   }[];
 }
 
+export interface TVShowVideo {
+  id: number;
+  results: {
+    id: string;
+    key: string;
+    name: string;
+    published_at: string;
+  }[];
+}
+
 export interface MoviesResponse {
   page: number;
   results: Movie[];
@@ -49,8 +49,9 @@ export interface TVShow {
   overview: string;
   first_air_date: string;
   poster_path: string;
+  backdrop_path: string;
   vote_average: number;
-  genre_ids: number[];
+  genres: Genres[];
 }
 
 export interface TVShowResponse {

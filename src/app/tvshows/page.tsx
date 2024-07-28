@@ -2,7 +2,6 @@
 
 import React, { useState } from "react";
 import Button from "@/components/common/Button";
-import MovieListItem from "@/components/movies/MovieListItem";
 import Input from "@/components/common/Input";
 import { useRouter } from "next/navigation";
 import bg from "@/assets/bg.jpg";
@@ -11,20 +10,25 @@ import Footer from "@/components/layout/Footer";
 import { useTopRatedTVShows } from "@/hooks/useTVShows";
 import { TVShow } from "@/api/types";
 
-export default function Series() {
+const MovieListItem = React.lazy(
+  () => import("@/components/movies/MovieListItem")
+);
+
+const Series: React.FC = () => {
   const [query, setQuery] = useState("");
   const router = useRouter();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault(); // Prevent default form submission
     if (query.trim()) {
-      router.push(`/movies/${encodeURIComponent(query.trim())}`);
+      router.push(`/tvshows/${encodeURIComponent(query.trim())}`);
     }
   };
+
   const { isLoading, data, error } = useTopRatedTVShows();
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <div className="text-center text-2xl">Loading...</div>;
   }
 
   if (error) {
@@ -49,9 +53,11 @@ export default function Series() {
             {data &&
               data.map((tv: TVShow) => (
                 <MovieListItem
+                  key={tv.id}
                   id={tv.id}
                   title={tv.name}
                   posterPath={tv.poster_path}
+                  type="tvshows" // Pass "tvshow" type
                 />
               ))}
           </div>
@@ -60,4 +66,6 @@ export default function Series() {
       <Footer />
     </main>
   );
-}
+};
+
+export default Series;
