@@ -10,13 +10,19 @@ const buttonVariants: Record<ButtonVariant, string> = {
 interface ButtonProps {
   text?: string;
   variant?: ButtonVariant;
+  onClick?: () => void;
 }
 
 const Button: React.FC<ButtonProps> = ({
   text = "Click",
   variant = "default",
+  onClick,
 }) => {
-  return <button className={buttonVariants[variant]}>{text}</button>;
+  return (
+    <button className={buttonVariants[variant]} onClick={onClick}>
+      {text}
+    </button>
+  );
 };
 
 export default Button;

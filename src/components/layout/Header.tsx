@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 interface HeaderProps {
-  className?: string; // Optional className prop
+  className?: string;
   style?: object;
 }
 

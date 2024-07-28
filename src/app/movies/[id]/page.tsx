@@ -2,21 +2,28 @@
 
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import { useMovieDetails } from "@/hooks/useMovies";
+import { useMovieDetails, useSimilarMovies } from "@/hooks/useMovies";
 import { format } from "date-fns";
 import { FaStar } from "react-icons/fa";
+import MoviesList from "@/components/movies/MoviesList";
 
 const MovieDetails: React.FC<{ params: { id: string } }> = ({ params }) => {
   const { id } = params;
-  const { data: movie, isLoading, error } = useMovieDetails(Number(id));
+  const movieId = Number(id);
+  const { data: movie, isLoading, error } = useMovieDetails(movieId);
+  const {
+    data: similarMovies,
+    isLoading: isSimilarLoading,
+    error: similarError,
+  } = useSimilarMovies(movieId);
 
   if (isLoading) return <div className="text-center text-2xl">Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
 
   if (!movie) return <div>No movie found</div>;
-  const imageUrl = `https://image.tmdb.org/t/p/original/${movie.backdrop_path}`; // Use original backdrop path
-  const posterUrl = `https://image.tmdb.org/t/p/w200/${movie.poster_path}`;
 
+  const imageUrl = `https://image.tmdb.org/t/p/original/${movie.backdrop_path}`;
+  const posterUrl = `https://image.tmdb.org/t/p/w200/${movie.poster_path}`;
   const formattedDate = movie.release_date
     ? format(new Date(movie.release_date), "MMM d, yyyy")
     : "Unknown date";
@@ -39,17 +46,10 @@ const MovieDetails: React.FC<{ params: { id: string } }> = ({ params }) => {
             />
             <div className="flex flex-col gap-6 max-w-lg">
               <h2 className="text-6xl font-bold">{movie.title}</h2>
-              <div className="text-sm flex gap-2 items-center">
+              <div className="text-sm flex gap-4 items-center">
                 <p>{formattedDate}</p>
-                <div className="flex gap-1">
-                  {movie.genres.map((genre) => (
-                    <span
-                      key={genre.id}
-                      className="bg-gray-800 text-white px-2 py-1 rounded-full text-sm"
-                    >
-                      {genre.name}
-                    </span>
-                  ))}
+                <div className="text-sm">
+                  {movie.genres.map((genre) => genre.name).join(", ")}
                 </div>
                 <p className="flex items-center gap-1">
                   <FaStar className="text-amber-300" />
@@ -61,9 +61,24 @@ const MovieDetails: React.FC<{ params: { id: string } }> = ({ params }) => {
               </p>
             </div>
           </section>
-          {/* Additional sections or components can be added here */}
         </div>
       </div>
+
+      <section className="w-full container pb-28 pt-10 flex flex-col gap-10">
+        {isSimilarLoading ? (
+          <div className="text-center text-2xl">Loading similar movies...</div>
+        ) : similarError ? (
+          <div>Error loading similar movies: {similarError.message}</div>
+        ) : similarMovies ? (
+          <MoviesList
+            listTitle="Similar Movies"
+            media={similarMovies.results}
+            type="movies"
+          />
+        ) : (
+          <div>No similar movies found</div>
+        )}
+      </section>
       <Footer />
     </main>
   );

@@ -1,5 +1,4 @@
 "use client";
-
 import React, { Suspense, useState } from "react";
 import HomeInfo from "./HomeInfo";
 import Header from "@/components/layout/Header";
@@ -13,15 +12,15 @@ const Home: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const {
-    data: moviesData = [],
-    error: moviesError,
-    isLoading: isLoadingMovies,
-  } = useTopRatedMovies();
-  const {
     data: trendingMoviesData = [],
     error: trendingMoviesError,
     isLoading: isLoadingTrendingMovies,
   } = useTrendingMovies();
+  const {
+    data: moviesData = [],
+    error: moviesError,
+    isLoading: isLoadingMovies,
+  } = useTopRatedMovies();
   const {
     data: topRatedTVData = [],
     error: topRatedTVError,
@@ -96,14 +95,14 @@ const Home: React.FC = () => {
           disabled={currentIndex === 0}
           className="absolute cursor-pointer left-0 top-0 bottom-0 w-1/5 h-full bg-transparent flex items-center justify-center"
         >
-          <span className="text-white text-2xl"></span> {/* Updated arrow */}
+          <span className="text-white text-2xl"></span>
         </button>
         <button
           onClick={handleNext}
           disabled={currentIndex === trendingMoviesData.length - 1}
           className="absolute right-0 top-0 bottom-0 w-1/5 h-full bg-transparent flex items-center justify-center"
         >
-          <span className="text-white text-2xl"></span> {/* Updated arrow */}
+          <span className="text-white text-2xl"></span>
         </button>
       </div>
       <div className="container py-20 flex flex-col">
@@ -124,7 +123,7 @@ const Home: React.FC = () => {
             <MoviesList
               listTitle="Top Rated TV Shows"
               media={topRatedTVData}
-              type="tvshows" // Pass "tvshow" type
+              type="tvshows"
             />
             <MoviesList
               listTitle="Trending TV Shows"

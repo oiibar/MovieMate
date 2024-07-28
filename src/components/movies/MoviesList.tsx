@@ -4,7 +4,6 @@ import MovieListItem from "./MovieListItem";
 import Button from "../common/Button";
 import Link from "next/link";
 
-// Type guard to check if item is a Movie
 function isMovie(item: Movie | TVShow): item is Movie {
   return (item as Movie).title !== undefined;
 }
@@ -12,7 +11,7 @@ function isMovie(item: Movie | TVShow): item is Movie {
 interface MoviesListProps {
   listTitle: string;
   media?: (Movie | TVShow)[];
-  type: "movies" | "tvshows"; // Added type prop
+  type: "movies" | "tvshows";
 }
 
 const MoviesList: React.FC<MoviesListProps> = ({
@@ -38,7 +37,7 @@ const MoviesList: React.FC<MoviesListProps> = ({
               id={item.id}
               title={isMovie(item) ? item.title : item.name}
               posterPath={item.poster_path}
-              type={type} // Pass type prop
+              type={type}
             />
           ))
         )}

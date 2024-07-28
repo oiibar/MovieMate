@@ -5,20 +5,19 @@ interface MovieListItemProps {
   id: number;
   title: string;
   posterPath: string;
-  type: "movies" | "tvshows"; // Added type prop
+  type: "movies" | "tvshows";
 }
 
 const MovieListItem: React.FC<MovieListItemProps> = ({
   id,
   title,
   posterPath,
-  type, // Destructure type prop
+  type,
 }) => {
   const router = useRouter();
   const imageUrl = `https://image.tmdb.org/t/p/w200/${posterPath}`;
 
   const handleClick = () => {
-    // Construct the URL based on the type prop
     router.push(`/${type}/${id}`);
   };
 

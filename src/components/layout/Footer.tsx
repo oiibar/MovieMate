@@ -1,13 +1,13 @@
 import Image from "next/image";
 import logo from "@/assets/logo.png";
-import bg from "@/assets/bg.jpg"; // Import the background image
+import bg from "@/assets/bg.jpg";
 import Link from "next/link";
 
 const Footer: React.FC = () => {
   return (
     <footer
       className="bg-cover bg-center bg-no-repeat"
-      style={{ backgroundImage: `url(${bg.src})` }} // Apply the background image
+      style={{ backgroundImage: `url(${bg.src})` }}
     >
       <div className="container flex flex-col justify-center items-center gap-12 py-16">
         <Link href="/home">

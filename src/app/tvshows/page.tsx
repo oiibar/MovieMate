@@ -1,4 +1,4 @@
-"use client"; // This line marks the component as a Client Component
+"use client";
 
 import React, { useState } from "react";
 import Button from "@/components/common/Button";
@@ -19,7 +19,7 @@ const Series: React.FC = () => {
   const router = useRouter();
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault(); // Prevent default form submission
+    e.preventDefault();
     if (query.trim()) {
       router.push(`/tvshows/${encodeURIComponent(query.trim())}`);
     }
@@ -57,7 +57,7 @@ const Series: React.FC = () => {
                   id={tv.id}
                   title={tv.name}
                   posterPath={tv.poster_path}
-                  type="tvshows" // Pass "tvshow" type
+                  type="tvshows"
                 />
               ))}
           </div>

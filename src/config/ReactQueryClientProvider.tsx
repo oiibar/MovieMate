@@ -14,9 +14,7 @@ export const ReactQueryClientProvider = ({
         defaultOptions: {
           queries: {
             staleTime: 5 * 60 * 1000,
-            refetchOnWindowFocus: true,
-            refetchOnReconnect: true,
-            refetchOnMount: false,
+            refetchOnWindowFocus: false,
           },
         },
       })

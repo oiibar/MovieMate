@@ -8,6 +8,6 @@ export const tmdbClient = axios.create({
   params: {
     api_key: apiKey,
     language: "en-US",
-    page: 1,
+    page: 2,
   },
 });

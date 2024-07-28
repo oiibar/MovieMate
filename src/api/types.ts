@@ -1,5 +1,3 @@
-// types.ts
-
 export interface Genres {
   id: number;
   name: string;
@@ -14,6 +12,17 @@ export interface Movie {
   title: string;
   vote_average: number;
   backdrop_path: string;
+}
+
+export interface TVShow {
+  id: number;
+  name: string;
+  overview: string;
+  first_air_date: string;
+  poster_path: string;
+  backdrop_path: string;
+  vote_average: number;
+  genres: Genres[];
 }
 
 export interface MovieVideo {
@@ -41,17 +50,6 @@ export interface MoviesResponse {
   results: Movie[];
   total_pages: number;
   total_results: number;
-}
-
-export interface TVShow {
-  id: number;
-  name: string;
-  overview: string;
-  first_air_date: string;
-  poster_path: string;
-  backdrop_path: string;
-  vote_average: number;
-  genres: Genres[];
 }
 
 export interface TVShowResponse {
