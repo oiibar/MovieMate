@@ -1,36 +1,56 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<h1 align="center" id="title">Movie App</h1>
 
-## Getting Started
+<p align="center"><img src="https://socialify.git.ci/oiibar/MovieMate/image?language=1&name=1&owner=1&pattern=Solid&theme=Light" alt="project-image"></p>
 
-First, run the development server:
+<p id="description">This is a user-friend & simple movie app that helps users to discovery and search for a movie to watch</p>
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+<h2>🧐 Features</h2>
+
+Here're some of the project's best features:
+
+- Discover Movies/TVShows
+- Search for Movies/TVShows
+- Detailed info about Movies/TVShows
+
+<h2>🛠️ Installation Steps:</h2>
+
+<p>1. Clone the project</p>
+
+```
+git clone https://github.com/oiibar/MovieMate.git
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+<p>2. Install packages</p>
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+npm i
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+<p>3. Run the client</p>
 
-## Learn More
+```
+npm run dev
+```
 
-To learn more about Next.js, take a look at the following resources:
+<h2>💻 Built with</h2>
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Technologies used in the project:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- ReactJS
+- NextJS
+- TypeScript
+- ReactQuery
+- TMDB Api
+- TailwindCSS
 
-## Deploy on Vercel
+Here are some screenshots of the project:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+<p align="center">
+  <img src="./src/previews/home.png" alt="Home">
+  <img src="./src/previews/movies.png" alt="Movies">
+  <img src="./src/previews/details.png" alt="Details">
+</p>
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+<h2>💖Like my work?</h2>
+
+Feel free to contact me<p><a href="contact-me-neon.vercel.app">contact-me-neon.vercel.app</a></p>
