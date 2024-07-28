@@ -10,7 +10,7 @@ const Footer: React.FC = () => {
       style={{ backgroundImage: `url(${bg.src})` }}
     >
       <div className="container flex flex-col justify-center items-center gap-12 py-16">
-        <Link href="/home">
+        <Link href="/">
           <div className="flex items-center cursor-pointer">
             <Image src={logo} alt="MovieMate" width={50} height={50} />
             <h1 className="text-2xl">MovieMate</h1>

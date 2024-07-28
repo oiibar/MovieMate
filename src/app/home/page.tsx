@@ -1,6 +1,6 @@
 "use client";
 import React, { Suspense, useState } from "react";
-import HomeInfo from "./HomeInfo";
+import HomeInfo from "../HomeInfo";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { useTopRatedMovies, useTrendingMovies } from "@/hooks/useMovies";

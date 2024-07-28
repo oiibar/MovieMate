@@ -18,17 +18,17 @@ const Header: React.FC<HeaderProps> = ({ className, style }) => {
       style={style}
     >
       <div className="container py-6 flex justify-between items-center">
-        <Link href="/home">
+        <Link href="/">
           <div className="flex items-center cursor-pointer">
             <Image src={logo} alt="MovieMate" width={50} height={50} />
             <h1 className="text-2xl">MovieMate</h1>
           </div>
         </Link>
         <ul className="flex gap-4 font-bold">
-          <Link href="/home">
+          <Link href="/">
             <li
               className={`cursor-pointer hover:scale-110 transition-transform duration-150 ${
-                pathname === "/home" ? "border-b-2 border-orange" : ""
+                pathname === "/" ? "border-b-2 border-orange" : ""
               }`}
             >
               Home
