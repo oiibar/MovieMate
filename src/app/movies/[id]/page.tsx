@@ -35,9 +35,7 @@ const MovieDetails: React.FC<{ params: { id: string } }> = ({ params }) => {
     : "Unknown date";
 
   const videos = movieVideo?.results || [];
-  const videoUrls = videos.map(
-    (video) => `https://www.youtube.com/embed/${video.key}`
-  );
+  const videoUrls = videos.map(video => `https://www.youtube.com/embed/${video.key}`);
 
   return (
     <main>

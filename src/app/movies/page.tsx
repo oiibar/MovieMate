@@ -9,7 +9,6 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { useTopRatedMovies } from "@/hooks/useMovies";
 import { Movie } from "@/api/types";
-import MoviesSearchForm from "./MoviesSearchForm";
 
 const MovieListItem = React.lazy(
   () => import("@/components/movies/MovieListItem")
@@ -41,7 +40,10 @@ export default function Movies() {
       <div className="container flex flex-col py-8">
         <section className="flex flex-col gap-10 justify-center items-center">
           <h1 className="text-4xl font-bold">Movies</h1>
-          <MoviesSearchForm />
+          <form className="flex gap-1" onSubmit={handleSubmit}>
+            <Input placeholder="Enter keywords" value={query} />
+            <Button text="Search" variant="glowing" />
+          </form>
           <div className="flex justify-between flex-wrap gap-2">
             {data &&
               data.map((movie: Movie) => (
