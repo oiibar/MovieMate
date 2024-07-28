@@ -14,7 +14,7 @@ export const fetchTVShowDetails = async (id: number): Promise<TVShow> => {
   return response.data;
 };
 export const fetchTVShowVideo = async (id: number): Promise<TVShowVideo> => {
-  const response = await tmdbClient.get(`tvshow/${id}/videos`);
+  const response = await tmdbClient.get(`tv/${id}/videos`);
   return response.data;
 };
 export const searchTVShows = async (query: string): Promise<TVShowResponse> => {

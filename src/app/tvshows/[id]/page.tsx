@@ -3,7 +3,11 @@
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { FaStar } from "react-icons/fa";
-import { useSimilarTVShows, useTVShowDetails } from "@/hooks/useTVShows";
+import {
+  useSimilarTVShows,
+  useTVShowDetails,
+  useTVShowVideo,
+} from "@/hooks/useTVShows";
 import { format } from "date-fns";
 import MoviesList from "@/components/movies/MoviesList";
 
@@ -11,7 +15,8 @@ const TVShowDetails: React.FC<{ params: { id: string } }> = ({ params }) => {
   const { id } = params;
   const TVShowId = Number(id);
 
-  const { data: tv, isLoading, error } = useTVShowDetails(Number(id));
+  const { data: tv, isLoading, error } = useTVShowDetails(TVShowId);
+  const { data: TVShowVideo } = useTVShowVideo(TVShowId);
   const {
     data: similarTVShows,
     isLoading: isSimilarLoading,
@@ -21,7 +26,7 @@ const TVShowDetails: React.FC<{ params: { id: string } }> = ({ params }) => {
   if (isLoading) return <div className="text-center text-2xl">Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
 
-  if (!tv) return <div>No TVShow found</div>;
+  if (!tv) return <div>No TV Show found</div>;
 
   const formattedDate = tv.first_air_date
     ? format(new Date(tv.first_air_date), "MMM d, yyyy")
@@ -29,6 +34,8 @@ const TVShowDetails: React.FC<{ params: { id: string } }> = ({ params }) => {
 
   const imageUrl = `https://image.tmdb.org/t/p/original/${tv.backdrop_path}`;
   const posterUrl = `https://image.tmdb.org/t/p/w200/${tv.poster_path}`;
+
+  const videos = TVShowVideo?.results || [];
 
   return (
     <main>
@@ -65,19 +72,40 @@ const TVShowDetails: React.FC<{ params: { id: string } }> = ({ params }) => {
           </section>
         </div>
       </div>
+
+      {videos.length > 0 && (
+        <section className="w-full container pb-28 pt-10">
+          <h2 className="text-3xl font-bold mb-4">Watch Trailers</h2>
+          <div className="flex flex-wrap justify-center gap-4">
+            {videos.map((video) => (
+              <iframe
+                key={video.id}
+                src={`https://www.youtube.com/embed/${video.key}`}
+                frameBorder="0"
+                allowFullScreen
+                className="w-full sm:w-1/2 lg:w-1/3 h-64"
+                title={video.name}
+              />
+            ))}
+          </div>
+        </section>
+      )}
+
       <section className="w-full container pb-28 pt-10 flex flex-col gap-10">
         {isSimilarLoading ? (
-          <div className="text-center text-2xl">Loading similar movies...</div>
+          <div className="text-center text-2xl">
+            Loading similar TV shows...
+          </div>
         ) : similarError ? (
-          <div>Error loading similar movies: {similarError.message}</div>
+          <div>Error loading similar TV shows: {similarError.message}</div>
         ) : similarTVShows ? (
           <MoviesList
-            listTitle="Similar Movies"
+            listTitle="Similar TV Shows"
             media={similarTVShows.results}
             type="tvshows"
           />
         ) : (
-          <div>No similar movies found</div>
+          <div>No similar TV shows found</div>
         )}
       </section>
       <Footer />

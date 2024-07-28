@@ -1,11 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
-import { TVShow, TVShowResponse } from "@/api/types";
+import { TVShow, TVShowResponse, TVShowVideo } from "@/api/types";
 import {
   fetchTopRatedTVShows,
   fetchTrendingTVShows,
   fetchTVShowDetails,
   searchTVShows,
   fetchSimilarTVShows,
+  fetchTVShowVideo,
 } from "@/api/tvShows";
 
 export const useTopRatedTVShows = () => {
@@ -40,5 +41,12 @@ export const useSimilarTVShows = (series_id: number) => {
   return useQuery<TVShowResponse, Error>({
     queryKey: ["similarTVShows", series_id],
     queryFn: () => fetchSimilarTVShows(series_id),
+  });
+};
+
+export const useTVShowVideo = (id: number) => {
+  return useQuery<TVShowVideo, Error>({
+    queryKey: ["tvShowVideo", id],
+    queryFn: () => fetchTVShowVideo(id),
   });
 };

@@ -2,7 +2,11 @@
 
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import { useMovieDetails, useSimilarMovies } from "@/hooks/useMovies";
+import {
+  useMovieDetails,
+  useSimilarMovies,
+  useMovieVideo,
+} from "@/hooks/useMovies";
 import { format } from "date-fns";
 import { FaStar } from "react-icons/fa";
 import MoviesList from "@/components/movies/MoviesList";
@@ -10,7 +14,9 @@ import MoviesList from "@/components/movies/MoviesList";
 const MovieDetails: React.FC<{ params: { id: string } }> = ({ params }) => {
   const { id } = params;
   const movieId = Number(id);
+
   const { data: movie, isLoading, error } = useMovieDetails(movieId);
+  const { data: movieVideo } = useMovieVideo(movieId);
   const {
     data: similarMovies,
     isLoading: isSimilarLoading,
@@ -27,6 +33,11 @@ const MovieDetails: React.FC<{ params: { id: string } }> = ({ params }) => {
   const formattedDate = movie.release_date
     ? format(new Date(movie.release_date), "MMM d, yyyy")
     : "Unknown date";
+
+  const videos = movieVideo?.results || [];
+  const videoUrls = videos.map(
+    (video) => `https://www.youtube.com/embed/${video.key}`
+  );
 
   return (
     <main>
@@ -63,6 +74,24 @@ const MovieDetails: React.FC<{ params: { id: string } }> = ({ params }) => {
           </section>
         </div>
       </div>
+
+      {videos.length > 0 && (
+        <section className="w-full container pb-28 pt-10">
+          <h2 className="text-3xl font-bold mb-4">Watch Trailers</h2>
+          <div className="flex flex-wrap justify-center gap-4">
+            {videos.map((video) => (
+              <iframe
+                key={video.id}
+                src={`https://www.youtube.com/embed/${video.key}`}
+                frameBorder="0"
+                allowFullScreen
+                className="w-full sm:w-1/2 lg:w-1/3 h-64"
+                title={video.name}
+              />
+            ))}
+          </div>
+        </section>
+      )}
 
       <section className="w-full container pb-28 pt-10 flex flex-col gap-10">
         {isSimilarLoading ? (
