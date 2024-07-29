@@ -50,7 +50,7 @@ const TVShowDetails: React.FC<{ params: { id: string } }> = ({ params }) => {
           <section className="flex gap-4 p-2 bg-opacity-80 rounded-lg shadow-lg items-center">
             <img
               src={posterUrl}
-              className="rounded-2xl h-96 w-full object-cover"
+              className="rounded-2xl h-96 w-full object-cover hidden md:block"
               alt={tv.name}
             />
             <div className="flex flex-col gap-6 max-w-lg">

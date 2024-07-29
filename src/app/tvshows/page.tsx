@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useState } from "react";
 import Button from "@/components/common/Button";
 import Input from "@/components/common/Input";
@@ -7,29 +6,38 @@ import { useRouter } from "next/navigation";
 import bg from "@/assets/bg.jpg";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import { useTopRatedTVShows } from "@/hooks/useTVShows";
+import { useSearchTVShows, useTopRatedTVShows } from "@/hooks/useTVShows";
 import { TVShow } from "@/api/types";
 
 const MovieListItem = React.lazy(
   () => import("@/components/movies/MovieListItem")
 );
 
-const Series: React.FC = () => {
-  const [query, setQuery] = useState("");
+export default function Series() {
+  const [query, setQuery] = useState<string>("");
   const router = useRouter();
+
+  const {
+    isLoading: isTopRatedLoading,
+    data: topRatedTVShows,
+    error: topRatedError,
+  } = useTopRatedTVShows();
+  const {
+    isLoading: isSearchLoading,
+    data: searchResults,
+    error: searchError,
+  } = useSearchTVShows(query);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (query.trim()) {
-      router.push(`/tvshows/${encodeURIComponent(query.trim())}`);
+      router.push(`/movies/${encodeURIComponent(query.trim())}`);
     }
   };
 
-  const { isLoading, data, error } = useTopRatedTVShows();
-
-  if (isLoading) {
-    return <div className="text-center text-2xl">Loading...</div>;
-  }
+  const isSearching = query.trim() !== "";
+  const error = isSearching ? searchError : topRatedError;
+  const tvToDisplay = isSearching ? searchResults?.results : topRatedTVShows;
 
   if (error) {
     return <div>Error: {error.message}</div>;
@@ -47,25 +55,29 @@ const Series: React.FC = () => {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
             />
-            <Button text="Search" variant="glowing" />
           </form>
-          <div className="flex justify-between flex-wrap gap-4">
-            {data &&
-              data.map((tv: TVShow) => (
-                <MovieListItem
-                  key={tv.id}
-                  id={tv.id}
-                  title={tv.name}
-                  posterPath={tv.poster_path}
-                  type="tvshows"
-                />
-              ))}
+          <div className="flex justify-center items-center flex-wrap gap-4">
+            {tvToDisplay ? (
+              tvToDisplay.length > 0 ? (
+                tvToDisplay.map((tv: TVShow) => (
+                  <MovieListItem
+                    key={tv.id}
+                    id={tv.id}
+                    title={tv.name}
+                    posterPath={tv.poster_path}
+                    type="tvshows"
+                  />
+                ))
+              ) : (
+                <div className="text-center text-2xl">No movies available.</div>
+              )
+            ) : (
+              <div className="text-center text-2xl">Loading...</div>
+            )}
           </div>
         </section>
       </div>
       <Footer />
     </main>
   );
-};
-
-export default Series;
+}

@@ -16,8 +16,8 @@ const Footer: React.FC = () => {
             <h1 className="text-2xl">MovieMate</h1>
           </div>
         </Link>
-        <div className="flex gap-20">
-          <div className="flex flex-col gap-4 text-primary">
+        <div className="flex flex-col sm:flex-row sm:gap-20 text-sm sm:text-lg gap-8 items-center">
+          <div className="flex sm:flex-col flex-row gap-4 text-primary">
             <a href="#" className="hover:text-orange">
               Home
             </a>
@@ -31,7 +31,7 @@ const Footer: React.FC = () => {
               About us
             </a>
           </div>
-          <div className="flex flex-col gap-4 text-primary">
+          <div className="flex sm:flex-col flex-row gap-4 text-primary">
             <a href="#" className="hover:text-orange">
               Live
             </a>
@@ -45,7 +45,7 @@ const Footer: React.FC = () => {
               Privacy Policy
             </a>
           </div>
-          <div className="flex flex-col gap-4 text-primary">
+          <div className="flex sm:flex-col flex-row gap-4 text-primary">
             <a href="#" className="hover:text-orange">
               You must watch
             </a>

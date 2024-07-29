@@ -15,6 +15,7 @@ const Input: React.FC<InputProps> = ({
       placeholder={placeholder}
       value={value}
       onChange={onChange}
+      autoFocus
       className="placeholder:text-[#303030] bg-[#000000] py-1 px-3 rounded-full focus:border-none"
     />
   );

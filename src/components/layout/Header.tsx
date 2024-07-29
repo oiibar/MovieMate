@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 
 interface HeaderProps {
   className?: string;
-  style?: object;
+  style?: React.CSSProperties; // Updated type to React.CSSProperties for better type-checking
 }
 
 const Header: React.FC<HeaderProps> = ({ className, style }) => {
@@ -21,33 +21,33 @@ const Header: React.FC<HeaderProps> = ({ className, style }) => {
         <Link href="/">
           <div className="flex items-center cursor-pointer">
             <Image src={logo} alt="MovieMate" width={50} height={50} />
-            <h1 className="text-2xl">MovieMate</h1>
+            <h1 className="text-2xl hidden md:block ml-2">MovieMate</h1>
           </div>
         </Link>
         <ul className="flex gap-4 font-bold">
           <Link href="/">
             <li
-              className={`cursor-pointer hover:scale-110 transition-transform duration-150 ${
+              className={`cursor-pointer hover:scale-110 text-sm transition-transform duration-150 ${
                 pathname === "/" ? "border-b-2 border-orange" : ""
-              }`}
+              } `}
             >
               Home
             </li>
           </Link>
           <Link href="/movies">
             <li
-              className={`cursor-pointer hover:scale-110 transition-transform duration-150 ${
+              className={`cursor-pointer hover:scale-110 text-sm transition-transform duration-150 ${
                 pathname === "/movies" ? "border-b-2 border-orange" : ""
-              }`}
+              } `}
             >
               Movies
             </li>
           </Link>
           <Link href="/tvshows">
             <li
-              className={`cursor-pointer hover:scale-110 transition-transform duration-150 ${
+              className={`cursor-pointer hover:scale-110 text-sm transition-transform duration-150 ${
                 pathname === "/tvshows" ? "border-b-2 border-orange" : ""
-              }`}
+              } `}
             >
               TV Shows
             </li>

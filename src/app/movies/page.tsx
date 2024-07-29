@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useState } from "react";
 import Button from "@/components/common/Button";
 import Input from "@/components/common/Input";
@@ -7,7 +6,7 @@ import { useRouter } from "next/navigation";
 import bg from "@/assets/bg.jpg";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import { useTopRatedMovies } from "@/hooks/useMovies";
+import { useSearchMovies, useTrendingMovies } from "@/hooks/useMovies";
 import { Movie } from "@/api/types";
 
 const MovieListItem = React.lazy(
@@ -15,8 +14,20 @@ const MovieListItem = React.lazy(
 );
 
 export default function Movies() {
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState<string>("");
   const router = useRouter();
+
+  const {
+    isLoading: isTopRatedLoading,
+    data: topRatedMovies,
+    error: topRatedError,
+  } = useTrendingMovies();
+  const {
+    isLoading: isSearchLoading,
+    data: searchResults,
+    error: searchError,
+  } = useSearchMovies(query);
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (query.trim()) {
@@ -24,11 +35,9 @@ export default function Movies() {
     }
   };
 
-  const { isLoading, data, error } = useTopRatedMovies();
-
-  if (isLoading) {
-    return <div className="text-center text-2xl">Loading...</div>;
-  }
+  const isSearching = query.trim() !== "";
+  const error = isSearching ? searchError : topRatedError;
+  const moviesToDisplay = isSearching ? searchResults?.results : topRatedMovies;
 
   if (error) {
     return <div>Error: {error.message}</div>;
@@ -41,22 +50,32 @@ export default function Movies() {
         <section className="flex flex-col gap-10 justify-center items-center">
           <h1 className="text-4xl font-bold">Movies</h1>
           <form className="flex gap-1" onSubmit={handleSubmit}>
-            <Input placeholder="Enter keywords" value={query} />
-            <Button text="Search" variant="glowing" />
+            <Input
+              placeholder="Enter keywords"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+            />
           </form>
-          <div className="flex justify-between flex-wrap gap-2">
-            {data &&
-              data.map((movie: Movie) => (
-                <MovieListItem
-                  key={movie.id}
-                  id={movie.id}
-                  title={movie.title}
-                  posterPath={movie.poster_path}
-                  type="movies"
-                />
-              ))}
+          <div className="flex justify-center items-center flex-wrap gap-2">
+            {moviesToDisplay ? (
+              moviesToDisplay.length > 0 ? (
+                moviesToDisplay.map((movie: Movie) => (
+                  <MovieListItem
+                    key={movie.id}
+                    id={movie.id}
+                    title={movie.title}
+                    posterPath={movie.poster_path}
+                    type="movies"
+                  />
+                ))
+              ) : (
+                <div className="text-center text-2xl">No movies available.</div>
+              )
+            ) : (
+              <div className="text-center text-2xl">Loading...</div>
+            )}
           </div>
-          <Button text="View more" variant="default" />
+          {!isSearching && <Button text="View more" variant="default" />}
         </section>
       </div>
       <Footer />

@@ -72,8 +72,17 @@ const App: React.FC = () => {
       <div className="relative overflow-hidden">
         <Header className="absolute top-0 left-0 right-0 z-50 bg-transparent" />
         <div
-          className="relative flex transition-transform duration-500 ease-in-out"
-          style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+          className={`relative flex transition-transform duration-500 ease-in-out ${
+            trendingMoviesData.length > 0 ? "md:bg-[#0F0F0F]" : ""
+          }`}
+          style={{
+            transform: `translateX(-${currentIndex * 100}%)`,
+            backgroundColor:
+              trendingMoviesData.length > 0 ? "bg-[#0F0F0F]" : "", // Use desired color
+            backgroundImage: `url(https://image.tmdb.org/t/p/original/${trendingMoviesData[currentIndex]?.backdrop_path})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
         >
           {trendingMoviesData.map((item) => (
             <div
@@ -81,6 +90,8 @@ const App: React.FC = () => {
               className="relative flex-shrink-0 w-full bg-cover bg-center bg-no-repeat"
               style={{
                 backgroundImage: `url(https://image.tmdb.org/t/p/original/${item.backdrop_path})`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
               }}
             >
               <div className="absolute inset-0 bg-black opacity-80"></div>

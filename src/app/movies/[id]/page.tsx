@@ -35,7 +35,9 @@ const MovieDetails: React.FC<{ params: { id: string } }> = ({ params }) => {
     : "Unknown date";
 
   const videos = movieVideo?.results || [];
-  const videoUrls = videos.map(video => `https://www.youtube.com/embed/${video.key}`);
+  const videoUrls = videos.map(
+    (video) => `https://www.youtube.com/embed/${video.key}`
+  );
 
   return (
     <main>
@@ -50,11 +52,11 @@ const MovieDetails: React.FC<{ params: { id: string } }> = ({ params }) => {
           <section className="flex gap-4 p-2 bg-opacity-80 rounded-lg shadow-lg items-center">
             <img
               src={posterUrl}
-              className="rounded-2xl h-96 w-full object-cover"
+              className="rounded-2xl h-96 w-full object-cover hidden md:block"
               alt={movie.title}
             />
             <div className="flex flex-col gap-6 max-w-lg">
-              <h2 className="text-6xl font-bold">{movie.title}</h2>
+              <h2 className="text-5xl font-bold">{movie.title}</h2>
               <div className="text-sm flex gap-4 items-center">
                 <p>{formattedDate}</p>
                 <div className="text-sm">
