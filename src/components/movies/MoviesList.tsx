@@ -1,8 +1,15 @@
 import React from "react";
 import { Movie, TVShow } from "@/api/types";
-import MovieListItem from "./MovieListItem";
 import Button from "../common/Button";
 import Link from "next/link";
+import dynamic from "next/dynamic";
+
+const MovieListItem = dynamic(
+  () => import("@/components/movies/MovieListItem"),
+  {
+    loading: () => <p>Loading...</p>,
+  }
+);
 
 function isMovie(item: Movie | TVShow): item is Movie {
   return (item as Movie).title !== undefined;

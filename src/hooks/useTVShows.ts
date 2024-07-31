@@ -9,17 +9,17 @@ import {
   fetchTVShowVideo,
 } from "@/api/tvShows";
 
-export const useTopRatedTVShows = () => {
+export const useTopRatedTVShows = (page: number = 1) => {
   return useQuery<TVShow[], Error>({
-    queryKey: ["topRatedTVShows"],
-    queryFn: fetchTopRatedTVShows,
+    queryKey: ["topRatedTVShows", page],
+    queryFn: () => fetchTopRatedTVShows(page),
   });
 };
 
-export const useTrendingTVShows = () => {
+export const useTrendingTVShows = (page: number = 1) => {
   return useQuery<TVShow[], Error>({
-    queryKey: ["trendingTVShows"],
-    queryFn: fetchTrendingTVShows,
+    queryKey: ["trendingTVShows", page],
+    queryFn: () => fetchTrendingTVShows(page),
   });
 };
 
@@ -30,17 +30,17 @@ export const useTVShowDetails = (id: number) => {
   });
 };
 
-export const useSearchTVShows = (query: string) => {
+export const useSearchTVShows = (query: string, page: number = 1) => {
   return useQuery<TVShowResponse, Error>({
-    queryKey: ["searchTVShows", query],
-    queryFn: () => searchTVShows(query),
+    queryKey: ["searchTVShows", query, page],
+    queryFn: () => searchTVShows(query, page),
   });
 };
 
-export const useSimilarTVShows = (series_id: number) => {
+export const useSimilarTVShows = (series_id: number, page: number = 1) => {
   return useQuery<TVShowResponse, Error>({
-    queryKey: ["similarTVShows", series_id],
-    queryFn: () => fetchSimilarTVShows(series_id),
+    queryKey: ["similarTVShows", series_id, page],
+    queryFn: () => fetchSimilarTVShows(series_id, page),
   });
 };
 

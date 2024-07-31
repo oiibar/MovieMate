@@ -15,24 +15,30 @@ const MovieListItem = React.lazy(
 
 export default function Series() {
   const [query, setQuery] = useState<string>("");
+  const [page, setPage] = useState<number>(1);
   const router = useRouter();
 
   const {
     isLoading: isTopRatedLoading,
     data: topRatedTVShows,
     error: topRatedError,
-  } = useTopRatedTVShows();
+  } = useTopRatedTVShows(page);
+
   const {
     isLoading: isSearchLoading,
     data: searchResults,
     error: searchError,
-  } = useSearchTVShows(query);
+  } = useSearchTVShows(query, page);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (query.trim()) {
-      router.push(`/movies/${encodeURIComponent(query.trim())}`);
+      router.push(`/series/${encodeURIComponent(query.trim())}`);
     }
+  };
+
+  const handlePageChange = (newPage: number) => {
+    setPage(newPage);
   };
 
   const isSearching = query.trim() !== "";
@@ -69,11 +75,20 @@ export default function Series() {
                   />
                 ))
               ) : (
-                <div className="text-center text-2xl">No movies available.</div>
+                <div className="text-center text-2xl">
+                  No TV shows available.
+                </div>
               )
             ) : (
               <div className="text-center text-2xl">Loading...</div>
             )}
+          </div>
+          <div className="flex gap-2 mt-4">
+            <Button
+              text="Previous"
+              onClick={() => handlePageChange(page - 1)}
+            />
+            <Button text="Next" onClick={() => handlePageChange(page + 1)} />
           </div>
         </section>
       </div>
