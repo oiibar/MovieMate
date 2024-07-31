@@ -15,18 +15,20 @@ const MovieListItem = React.lazy(
 
 export default function Movies() {
   const [query, setQuery] = useState<string>("");
+  const [page, setPage] = useState<number>(1); // Pagination state
   const router = useRouter();
 
   const {
-    isLoading: isTopRatedLoading,
-    data: topRatedMovies,
-    error: topRatedError,
-  } = useTrendingMovies();
+    isLoading: isTrendingLoading,
+    data: trendingMovies,
+    error: trendingError,
+  } = useTrendingMovies(page);
+
   const {
     isLoading: isSearchLoading,
     data: searchResults,
     error: searchError,
-  } = useSearchMovies(query);
+  } = useSearchMovies(query, page);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -35,9 +37,13 @@ export default function Movies() {
     }
   };
 
+  const handlePageChange = (newPage: number) => {
+    setPage(newPage);
+  };
+
   const isSearching = query.trim() !== "";
-  const error = isSearching ? searchError : topRatedError;
-  const moviesToDisplay = isSearching ? searchResults?.results : topRatedMovies;
+  const error = isSearching ? searchError : trendingError;
+  const moviesToDisplay = isSearching ? searchResults?.results : trendingMovies;
 
   if (error) {
     return <div>Error: {error.message}</div>;
@@ -69,13 +75,19 @@ export default function Movies() {
                   />
                 ))
               ) : (
-                <div className="text-center text-2xl">No movies available.</div>
+                <div className="text-center text-2xl">No movies found!</div>
               )
             ) : (
               <div className="text-center text-2xl">Loading...</div>
             )}
           </div>
-          {!isSearching && <Button text="View more" variant="default" />}
+          <div className="flex gap-2 mt-4">
+            <Button
+              text="Previous"
+              onClick={() => handlePageChange(page > 1 ? page - 1 : 1)}
+            />
+            <Button text="Next" onClick={() => handlePageChange(page + 1)} />
+          </div>
         </section>
       </div>
       <Footer />
