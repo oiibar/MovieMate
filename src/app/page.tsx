@@ -8,14 +8,7 @@ import { Movie, TVShow } from "@/api/types";
 const MoviesList = React.lazy(() => import("@/components/movies/MoviesList"));
 const HomeHeader = React.lazy(() => import("@/components/home/HomeHeader"));
 
-interface Media {
-  topRatedMovies: Movie[];
-  trendingMovies: Movie[];
-  topRatedTVShows: TVShow[];
-  trendingTVShows: TVShow[];
-}
-
-const App: React.FC<Media> = async () => {
+const App: React.FC = async () => {
   const [topRatedMovies, trendingMovies] = await Promise.all([
     fetchTopRatedMovies(),
     fetchTrendingMovies(),
