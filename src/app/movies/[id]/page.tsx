@@ -4,7 +4,8 @@ import {
   fetchMovieVideo,
   fetchSimilarMovies,
 } from "@/api/movies";
-import MovieDetails from "@/components/movies/MovieDetails";
+import dynamic from "next/dynamic";
+const MovieDetails = dynamic(() => import("@/components/movies/MovieDetails"));
 
 interface Params {
   params: {

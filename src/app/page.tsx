@@ -3,10 +3,10 @@ import Header from "@/components/movies/layout/Header";
 import Footer from "@/components/movies/layout/Footer";
 import { fetchTopRatedTVShows, fetchTrendingTVShows } from "@/api/tvShows";
 import { fetchTopRatedMovies, fetchTrendingMovies } from "@/api/movies";
-import { Movie, TVShow } from "@/api/types";
+import dynamic from "next/dynamic";
 
-const MoviesList = React.lazy(() => import("@/components/movies/MoviesList"));
-const HomeHeader = React.lazy(() => import("@/components/home/HomeHeader"));
+const MoviesList = dynamic(() => import("@/components/movies/MoviesList"));
+const HomeHeader = dynamic(() => import("@/components/home/HomeHeader"));
 
 const App: React.FC = async () => {
   const [topRatedMovies, trendingMovies] = await Promise.all([

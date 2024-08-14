@@ -4,7 +4,10 @@ import {
   fetchTVShowDetails,
   fetchTVShowVideo,
 } from "@/api/tvShows";
-import TVShowDetails from "@/components/movies/TVShowDetails";
+import dynamic from "next/dynamic";
+const TVShowDetails = dynamic(
+  () => import("@/components/movies/TVShowDetails")
+);
 
 interface Params {
   params: {

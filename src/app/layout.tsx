@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 import "@/styles/index.css";
-import Footer from "@/components/movies/layout/Footer";
+import dynamic from "next/dynamic";
+const Footer = dynamic(() => import("@/components/movies/layout/Footer"));
 
 const montserrat = Montserrat({ subsets: ["latin"] });
 
