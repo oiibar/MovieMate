@@ -6,13 +6,13 @@ import {
 } from "@/api/tvShows";
 import TVShowDetails from "@/components/movies/TVShowDetails";
 
-interface Props {
+interface Params {
   params: {
     id: string;
   };
 }
 
-const SeriesPage: React.FC<Props> = async ({ params }) => {
+const SeriesPage: React.FC<Params> = async ({ params }) => {
   const { id } = params;
   const tvShowId = Number(id);
 

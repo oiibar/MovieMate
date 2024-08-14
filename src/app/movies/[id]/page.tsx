@@ -6,13 +6,13 @@ import {
 } from "@/api/movies";
 import MovieDetails from "@/components/movies/MovieDetails";
 
-interface Props {
+interface Params {
   params: {
     id: string;
   };
 }
 
-const MoviePage: React.FC<Props> = async ({ params }) => {
+const MoviePage: React.FC<Params> = async ({ params }) => {
   const { id } = params;
   const movieId = Number(id);
 
